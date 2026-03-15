@@ -20,6 +20,7 @@
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: hidden;
   font-family: "Trebuchet MS", "Gill Sans", "Avenir Next", sans-serif;
   color: var(--ink);
   background:
@@ -46,6 +47,28 @@ body::before {
   max-width: 1500px;
   margin: 0 auto;
   padding: 32px 24px 40px;
+}
+
+[data-transition-shell] {
+  will-change: transform, opacity, filter;
+}
+
+body.is-entering-from-chemistry [data-transition-shell] {
+  animation: slide-in-from-left 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+body.is-entering-from-home [data-transition-shell] {
+  animation: slide-in-from-right 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+body.is-leaving-to-chemistry [data-transition-shell] {
+  animation: slide-out-to-left 360ms cubic-bezier(0.55, 0, 0.7, 1) both;
+  pointer-events: none;
+}
+
+body.is-leaving-to-home [data-transition-shell] {
+  animation: slide-out-to-right 360ms cubic-bezier(0.55, 0, 0.7, 1) both;
+  pointer-events: none;
 }
 
 .site-tabs {
@@ -403,6 +426,65 @@ input[type="range"] {
 
 .force-link.repulsion {
   mix-blend-mode: normal;
+}
+
+@keyframes slide-in-from-right {
+  from {
+    opacity: 0.22;
+    transform: translateX(72px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes slide-in-from-left {
+  from {
+    opacity: 0.22;
+    transform: translateX(-72px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes slide-out-to-left {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0.18;
+    transform: translateX(-88px);
+    filter: blur(10px);
+  }
+}
+
+@keyframes slide-out-to-right {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0.18;
+    transform: translateX(88px);
+    filter: blur(10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-transition-shell] {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 @media (max-width: 1180px) {
