@@ -97,6 +97,40 @@ main {
   padding: 1.5rem 0 1rem;
 }
 
+.site-tabs {
+  display: inline-flex;
+  gap: 0.55rem;
+  margin: 0 0 1rem;
+  padding: 0.45rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: rgba(7, 19, 26, 0.66);
+  box-shadow: var(--shadow);
+}
+
+.site-tab {
+  padding: 0.72rem 1.1rem;
+  border-radius: 999px;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: background 160ms ease, color 160ms ease, transform 160ms ease;
+}
+
+.site-tab:hover,
+.site-tab:focus-visible {
+  color: var(--text);
+  transform: translateY(-1px);
+}
+
+.site-tab.is-active {
+  background: linear-gradient(135deg, rgba(137, 242, 255, 0.18), rgba(167, 255, 132, 0.2));
+  color: var(--text);
+  border: 1px solid rgba(137, 242, 255, 0.16);
+}
+
 .brand {
   display: inline-flex;
   align-items: center;
@@ -377,6 +411,46 @@ main {
   margin: 2rem 0 3rem;
 }
 
+.simulator-promo {
+  margin: 0 0 2rem;
+}
+
+.simulator-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.6rem 1.8rem;
+  border-radius: 1.6rem;
+  border: 1px solid rgba(137, 242, 255, 0.2);
+  background:
+    radial-gradient(circle at top right, rgba(137, 242, 255, 0.1), transparent 35%),
+    linear-gradient(180deg, rgba(11, 28, 35, 0.88), rgba(7, 19, 26, 0.82));
+  box-shadow: var(--shadow);
+}
+
+.simulator-kicker {
+  margin: 0 0 0.65rem;
+  font-family: "IBM Plex Mono", monospace;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--cyan);
+}
+
+.simulator-card h3 {
+  margin: 0;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(1.8rem, 3vw, 2.6rem);
+}
+
+.simulator-card p:last-child {
+  margin: 0.8rem 0 0;
+  max-width: 58ch;
+  color: #d5e4dd;
+  line-height: 1.65;
+}
+
 .story-card {
   padding: 1.5rem;
 }
@@ -567,6 +641,11 @@ main {
   .hero-visual {
     min-height: 24rem;
   }
+
+  .simulator-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 
 @media (max-width: 720px) {
@@ -581,6 +660,10 @@ main {
   .hero,
   main {
     width: min(100% - 1rem, 1200px);
+  }
+
+  .topbar {
+    padding-top: 1rem;
   }
 
   .hero-copy h1 {
@@ -613,5 +696,15 @@ main {
 
   .project-meta {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .site-tabs {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .site-tab {
+    text-align: center;
   }
 }
