@@ -175,45 +175,21 @@ h1 {
   padding: clamp(1.1rem, 2vw, 1.5rem);
 }
 
-.panel h2 {
-  font-size: clamp(1.55rem, 3vw, 2.1rem);
+.embed-panel {
+  padding: 0.7rem;
 }
 
-.metric-grid {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 0.75rem;
-  margin-top: 0.95rem;
-}
-
-.metric-card {
+.app-frame {
+  width: 100%;
+  height: min(980px, 80vh);
   border: 1px solid rgba(106, 181, 255, 0.24);
-  border-radius: 16px;
-  padding: 0.95rem;
-  background: rgba(10, 19, 44, 0.76);
-}
-
-.metric-label {
-  font-size: 0.78rem;
-  text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: var(--muted);
-}
-
-.metric-card strong {
-  margin-top: 0.5rem;
-  display: block;
-  font-size: 1.2rem;
-}
-
-.note {
-  margin: 0.9rem 0 0;
-  color: var(--muted);
+  border-radius: 18px;
+  background: #0a132b;
 }
 
 @media (max-width: 900px) {
-  .metric-grid {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+  .app-frame {
+    height: 76vh;
   }
 }
 
@@ -235,8 +211,8 @@ h1 {
     padding: 0.72rem 0.6rem;
   }
 
-  .metric-grid {
-    grid-template-columns: 1fr;
+  .app-frame {
+    height: 74vh;
   }
 }
 
