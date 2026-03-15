@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grammercy | Reactive Systems</title>
+    <meta
+      name="description"
+      content="A chemistry-inflected personal site for Grammercy, featuring a live catalog of public GitHub projects."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <div class="ambient ambient-a"></div>
+      <div class="ambient ambient-b"></div>
+      <div class="grid-overlay"></div>
+
+      <header class="hero">
+        <nav class="topbar" aria-label="Primary">
+          <a class="brand" href="#top">
+            <span class="brand-mark">C</span>
+            <span class="brand-copy">
+              <strong>Grammercy</strong>
+              <span>Reactive systems, live experiments, shipped in public.</span>
+            </span>
+          </a>
+          <div class="nav-links">
+            <a href="#projects">Projects</a>
+            <a href="#profile">Profile</a>
+            <a href="https://github.com/Grammercy" target="_blank" rel="noreferrer">GitHub</a>
+          </div>
+        </nav>
+
+        <section class="hero-panel" id="top">
+          <div class="hero-copy">
+            <p class="eyebrow">Personal Lab Notebook</p>
+            <h1>
+              Code with
+              <span>chemical character</span>
+            </h1>
+            <p class="lede">
+              This site treats each repository as a live compound: some are stable tools,
+              some are half-finished reactions, and some are ambitious engines still under
+              heat. The registry below reads directly from Grammercy’s public GitHub work.
+            </p>
+            <div class="hero-actions">
+              <a class="button button-primary" href="#projects">Browse the compounds</a>
+              <a
+                class="button button-secondary"
+                href="https://github.com/Grammercy"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open GitHub profile
+              </a>
+            </div>
+          </div>
+
+          <div class="hero-visual" aria-hidden="true">
+            <div class="atom atom-core">Gr</div>
+            <div class="orbit orbit-one"><span>Go</span></div>
+            <div class="orbit orbit-two"><span>TS</span></div>
+            <div class="orbit orbit-three"><span>C</span></div>
+            <div class="float-card fc-one">
+              <span class="float-label">Primary discipline</span>
+              <strong>Systems, experiments, interfaces</strong>
+            </div>
+            <div class="float-card fc-two">
+              <span class="float-label">Live sync</span>
+              <strong id="sync-stamp">Querying GitHub…</strong>
+            </div>
+          </div>
+        </section>
+      </header>
+
+      <main>
+        <section class="metrics" id="profile" aria-label="Profile metrics">
+          <article class="metric-card">
+            <span class="metric-kicker">Public repos</span>
+            <strong id="repo-count">--</strong>
+            <p>Cataloged directly from the GitHub API.</p>
+          </article>
+          <article class="metric-card">
+            <span class="metric-kicker">Account created</span>
+            <strong id="created-at">--</strong>
+            <p>Origin point of the public logbook.</p>
+          </article>
+          <article class="metric-card">
+            <span class="metric-kicker">Languages in rotation</span>
+            <strong id="language-count">--</strong>
+            <p>Measured from repository primary languages.</p>
+          </article>
+          <article class="metric-card">
+            <span class="metric-kicker">Current motif</span>
+            <strong>Chemistry</strong>
+            <p>Laboratory visuals for a GitHub Pages deployment.</p>
+          </article>
+        </section>
+
+        <section class="story-grid" aria-label="Focus areas">
+          <article class="story-card">
+            <p class="story-index">01</p>
+            <h2>Reaction profile</h2>
+            <p>
+              The project history leans toward compilers of experience: desktop utilities,
+              experiments in game simulation, chat clients, AI engines, and lightweight web
+              interfaces.
+            </p>
+          </article>
+          <article class="story-card">
+            <p class="story-index">02</p>
+            <h2>Not every compound is finished</h2>
+            <p>
+              Some repositories are polished enough to explain themselves. Others are clearly
+              prototypes. This page keeps that distinction visible instead of flattening
+              everything into identical portfolio copy.
+            </p>
+          </article>
+          <article class="story-card">
+            <p class="story-index">03</p>
+            <h2>Designed for GitHub hosting</h2>
+            <p>
+              No build system, no framework dependency, no deployment friction. The page is a
+              static front-end that can live directly in `Grammercy.github.io`.
+            </p>
+          </article>
+        </section>
+
+        <section class="projects-section" id="projects">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Repository Registry</p>
+              <h2>All public GitHub projects by Grammercy</h2>
+            </div>
+            <p class="section-note" id="registry-note">
+              Loading repository data from GitHub.
+            </p>
+          </div>
+
+          <div class="legend" aria-label="Legend">
+            <span><i class="dot dot-source"></i> Original source repo</span>
+            <span><i class="dot dot-fork"></i> Fork or external base</span>
+            <span><i class="dot dot-live"></i> Runtime metadata from GitHub API</span>
+          </div>
+
+          <div id="projects-grid" class="projects-grid" aria-live="polite">
+            <article class="project-card loading-card">
+              <p>Preparing the registry…</p>
+            </article>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <template id="project-card-template">
+      <article class="project-card">
+        <div class="project-topline">
+          <span class="project-formula"></span>
+          <span class="project-state"></span>
+        </div>
+        <div class="project-heading">
+          <h3></h3>
+          <a class="project-link" target="_blank" rel="noreferrer">Open repo</a>
+        </div>
+        <p class="project-description"></p>
+        <div class="project-tags"></div>
+        <dl class="project-meta">
+          <div>
+            <dt>Created</dt>
+            <dd class="meta-created"></dd>
+          </div>
+          <div>
+            <dt>Updated</dt>
+            <dd class="meta-updated"></dd>
+          </div>
+          <div>
+            <dt>Primary</dt>
+            <dd class="meta-language"></dd>
+          </div>
+          <div>
+            <dt>Shape</dt>
+            <dd class="meta-kind"></dd>
+          </div>
+        </dl>
+      </article>
+    </template>
+
+    <script src="./script.js"></script>
+  </body>
+</html>
