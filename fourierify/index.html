@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Grammercy Fourierify</title>
+    <meta
+      name="description"
+      content="Fourierify project page for Grammercy with live repository status and launch links."
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell" data-transition-shell>
+      <nav class="site-tabs" aria-label="Site sections">
+        <a class="site-tab" href="../">Project Registry</a>
+        <a class="site-tab" href="../chemistry/">Chemistry Simulator</a>
+        <a class="site-tab is-active" href="./" aria-current="page">Fourierify</a>
+      </nav>
+
+      <main class="layout">
+        <header class="hero">
+          <p class="eyebrow">Signal Lab</p>
+          <h1>Fourierify</h1>
+          <p class="lede">
+            Dedicated tab for the Fourierify project. Track repository activity, inspect
+            the current status, and jump straight to the source.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="https://github.com/Grammercy/fourierify" target="_blank" rel="noreferrer">
+              Open GitHub repo
+            </a>
+            <a class="button button-secondary" href="../#projects">Back to registry</a>
+          </div>
+        </header>
+
+        <section class="panel metrics" aria-label="Fourierify repository status">
+          <h2>Live repository snapshot</h2>
+          <div class="metric-grid">
+            <article class="metric-card">
+              <span class="metric-label">Primary language</span>
+              <strong id="repo-language">Loading...</strong>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">Last push</span>
+              <strong id="repo-pushed">Loading...</strong>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">Default branch</span>
+              <strong id="repo-branch">Loading...</strong>
+            </article>
+            <article class="metric-card">
+              <span class="metric-label">Open issues</span>
+              <strong id="repo-issues">Loading...</strong>
+            </article>
+          </div>
+          <p id="repo-note" class="note">Requesting latest public metadata from GitHub.</p>
+        </section>
+      </main>
+    </div>
+
+    <script src="../page-transition.js"></script>
+    <script>
+      (async function hydrateFourierify() {
+        const languageEl = document.getElementById("repo-language");
+        const pushedEl = document.getElementById("repo-pushed");
+        const branchEl = document.getElementById("repo-branch");
+        const issuesEl = document.getElementById("repo-issues");
+        const noteEl = document.getElementById("repo-note");
+
+        const formatDate = (value) =>
+          new Date(value).toLocaleDateString("en-US", {
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+          });
+
+        try {
+          const response = await fetch("https://api.github.com/repos/Grammercy/fourierify");
+          if (!response.ok) {
+            throw new Error("GitHub request failed");
+          }
+
+          const repo = await response.json();
+          languageEl.textContent = repo.language || "Unspecified";
+          pushedEl.textContent = formatDate(repo.pushed_at);
+          branchEl.textContent = repo.default_branch || "main";
+          issuesEl.textContent = `${repo.open_issues_count ?? 0}`;
+          noteEl.textContent = "Live data from the Fourierify repository API endpoint.";
+        } catch (error) {
+          languageEl.textContent = "JavaScript";
+          pushedEl.textContent = "Mar 15, 2026";
+          branchEl.textContent = "main";
+          issuesEl.textContent = "0";
+          noteEl.textContent = "Live request failed; showing fallback repository details.";
+          console.error(error);
+        }
+      })();
+    </script>
+  </body>
+</html>
