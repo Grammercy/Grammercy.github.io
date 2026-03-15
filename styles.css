@@ -27,6 +27,7 @@ html {
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: hidden;
   background:
     radial-gradient(circle at top left, rgba(137, 242, 255, 0.12), transparent 32%),
     radial-gradient(circle at 85% 15%, rgba(167, 255, 132, 0.14), transparent 28%),
@@ -43,6 +44,28 @@ a {
 .page-shell {
   position: relative;
   overflow: hidden;
+}
+
+[data-transition-shell] {
+  will-change: transform, opacity, filter;
+}
+
+body.is-entering-from-chemistry [data-transition-shell] {
+  animation: slide-in-from-left 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+body.is-entering-from-home [data-transition-shell] {
+  animation: slide-in-from-right 480ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+body.is-leaving-to-chemistry [data-transition-shell] {
+  animation: slide-out-to-left 360ms cubic-bezier(0.55, 0, 0.7, 1) both;
+  pointer-events: none;
+}
+
+body.is-leaving-to-home [data-transition-shell] {
+  animation: slide-out-to-right 360ms cubic-bezier(0.55, 0, 0.7, 1) both;
+  pointer-events: none;
 }
 
 .ambient {
@@ -623,6 +646,65 @@ main {
   }
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes slide-in-from-right {
+  from {
+    opacity: 0.22;
+    transform: translateX(72px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes slide-in-from-left {
+  from {
+    opacity: 0.22;
+    transform: translateX(-72px);
+    filter: blur(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+}
+
+@keyframes slide-out-to-left {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0.18;
+    transform: translateX(-88px);
+    filter: blur(10px);
+  }
+}
+
+@keyframes slide-out-to-right {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+    filter: blur(0);
+  }
+  to {
+    opacity: 0.18;
+    transform: translateX(88px);
+    filter: blur(10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-transition-shell] {
+    animation: none !important;
+    transition: none !important;
   }
 }
 
