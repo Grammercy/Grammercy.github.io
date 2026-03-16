@@ -1,7 +1,6 @@
 (function () {
   const STORAGE_KEY = "site-page-transition";
   const shell = document.querySelector("[data-transition-shell]");
-  const PAGE_ORDER = ["home", "chemistry", "fourierify"];
 
   if (!shell) {
     return;
@@ -17,34 +16,6 @@
     return pathname.endsWith("/") ? pathname : `${pathname}/`;
   }
 
-  function getPageKind(pathname) {
-    const path = normalizePath(pathname);
-
-    if (path.includes("/chemistry/")) {
-      return "chemistry";
-    }
-    if (path.includes("/fourierify/")) {
-      return "fourierify";
-    }
-    return "home";
-  }
-
-  function pageIndex(kind) {
-    const index = PAGE_ORDER.indexOf(kind);
-    return index === -1 ? 0 : index;
-  }
-
-  function getTransitionDirection(targetUrl) {
-    const currentKind = getPageKind(window.location.pathname);
-    const targetKind = getPageKind(targetUrl.pathname);
-
-    if (currentKind === targetKind) {
-      return null;
-    }
-
-    return pageIndex(targetKind) > pageIndex(currentKind) ? "forward" : "backward";
-  }
-
   function cleanupEntryClass(className) {
     window.setTimeout(() => {
       document.body.classList.remove(className);
@@ -52,12 +23,9 @@
   }
 
   const pendingTransition = window.sessionStorage.getItem(STORAGE_KEY);
-  if (pendingTransition === "forward") {
-    document.body.classList.add("is-entering-forward");
-    cleanupEntryClass("is-entering-forward");
-  } else if (pendingTransition === "backward") {
-    document.body.classList.add("is-entering-backward");
-    cleanupEntryClass("is-entering-backward");
+  if (pendingTransition === "zoom") {
+    document.body.classList.add("is-entering-zoom");
+    cleanupEntryClass("is-entering-zoom");
   }
   window.sessionStorage.removeItem(STORAGE_KEY);
 
@@ -89,17 +57,13 @@
       return;
     }
 
-    const transitionDirection = getTransitionDirection(targetUrl);
-    if (!transitionDirection || reduceMotion.matches) {
+    if (reduceMotion.matches) {
       return;
     }
 
     event.preventDefault();
-    window.sessionStorage.setItem(STORAGE_KEY, transitionDirection);
-
-    const leavingClass =
-      transitionDirection === "forward" ? "is-leaving-forward" : "is-leaving-backward";
-    document.body.classList.add(leavingClass);
+    window.sessionStorage.setItem(STORAGE_KEY, "zoom");
+    document.body.classList.add("is-leaving-zoom");
 
     window.setTimeout(() => {
       window.location.href = targetUrl.href;
