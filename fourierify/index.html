@@ -2,61 +2,82 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Grammercy Fourierify</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta
       name="description"
-      content="Embedded Fourierify website tab inside the Grammercy project site."
+      content="Draw by hand and watch a Fourier epicycle reconstruction reanimate your stroke count with slick neon controls."
     />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Manrope:wght@400;500;600;700&display=swap"
-      rel="stylesheet"
-    />
-    <link rel="stylesheet" href="./styles.css" />
+    <title>Fourierify — Epicycle Sketch Lab</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="page-shell" data-transition-shell>
+    <div class="app-shell" data-transition-shell>
       <nav class="site-tabs" aria-label="Site sections">
         <a class="site-tab" href="../">Project Registry</a>
         <a class="site-tab" href="../chemistry/">Chemistry Simulator</a>
         <a class="site-tab is-active" href="./" aria-current="page">Fourierify</a>
       </nav>
 
-      <main class="layout">
+      <div class="scene">
         <header class="hero">
-          <p class="eyebrow">Embedded Project</p>
-          <h1>Fourierify Website</h1>
+          <p class="eyebrow">Fourierify</p>
+          <h1>Sketch a gesture, then watch epicycles choreograph it.</h1>
           <p class="lede">
-            This tab loads the actual Fourierify website directly inside your main site.
+            Draw a fluid line anywhere on the canvas. When you lift the pointer, a constellation of rotating circles
+            will redraw it using Fourier magic. Use the slider to decide how many orbiting circles keep the dance precise
+            or boldly abstract.
           </p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="./app/">
-              Open full tab view
-            </a>
-            <a
-              class="button button-secondary"
-              href="https://github.com/Grammercy/fourierify"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Open GitHub repo
-            </a>
-          </div>
         </header>
 
-        <section class="panel embed-panel" aria-label="Fourierify app frame">
-          <iframe
-            class="app-frame"
-            src="./app/"
-            title="Fourierify Website"
-            loading="eager"
-          ></iframe>
-        </section>
-      </main>
+        <main class="workspace">
+          <section class="canvas-shell">
+            <canvas id="draw"></canvas>
+            <div class="canvas-overlay">
+              <p>Hold to draw -> release to compute epicycles. Slider adjusts the number of circles in motion.</p>
+              <span class="pulse"></span>
+            </div>
+          </section>
+
+          <section class="control-card">
+            <div class="control-row">
+              <label>Preloaded slots</label>
+            </div>
+            <div class="preset-grid">
+              <button type="button" class="preset-slot" data-preset="pulse">Pulse ring</button>
+              <button type="button" class="preset-slot" data-preset="star">Star bloom</button>
+              <button type="button" class="preset-slot" data-preset="infinity">Infinity loop</button>
+              <button type="button" class="preset-slot" data-preset="spiral">Spiral drift</button>
+              <button type="button" class="preset-slot" data-preset="mandelbrot">Mandelbrot set</button>
+              <button type="button" class="preset-slot" data-preset="butterfly">Butterfly chaos</button>
+              <button type="button" class="preset-slot" data-preset="hypotrochoid">Hypotrochoid knot</button>
+              <button type="button" class="preset-slot" data-preset="lissajous">Lissajous braid</button>
+              <button type="button" class="preset-slot" data-preset="rose">Rose labyrinth</button>
+            </div>
+
+            <div class="control-row">
+              <label for="termSlider">Circle count</label>
+              <div class="slider-meta">
+                <span id="termValue">48</span>
+                <span>circles</span>
+              </div>
+            </div>
+            <input type="range" id="termSlider" min="1" max="120" value="48" />
+
+            <div class="buttons">
+              <button type="button" id="reset">Fresh canvas</button>
+              <button type="button" id="randomize">Random slot</button>
+            </div>
+
+            <p class="hint">
+              Fewer circles keep the motion raw and playful; more circles capture every subtle curl. The demo keeps animating
+              even when you pause, so you can keep watching the epicycles redraw your line.
+            </p>
+          </section>
+        </main>
+      </div>
     </div>
 
     <script src="../page-transition.js"></script>
+    <script type="module" src="app.js"></script>
   </body>
 </html>
