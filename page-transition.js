@@ -1,6 +1,7 @@
 (function () {
   const STORAGE_KEY = "site-page-transition";
   const shell = document.querySelector("[data-transition-shell]");
+  const PAGE_ORDER = ["home", "chemistry", "fourierify"];
 
   if (!shell) {
     return;
@@ -17,10 +18,23 @@
   }
 
   function getPageKind(pathname) {
-    return normalizePath(pathname).includes("/chemistry/") ? "chemistry" : "home";
+    const path = normalizePath(pathname);
+
+    if (path.includes("/chemistry/")) {
+      return "chemistry";
+    }
+    if (path.includes("/fourierify/")) {
+      return "fourierify";
+    }
+    return "home";
   }
 
-  function getTransitionType(targetUrl) {
+  function pageIndex(kind) {
+    const index = PAGE_ORDER.indexOf(kind);
+    return index === -1 ? 0 : index;
+  }
+
+  function getTransitionDirection(targetUrl) {
     const currentKind = getPageKind(window.location.pathname);
     const targetKind = getPageKind(targetUrl.pathname);
 
@@ -28,7 +42,7 @@
       return null;
     }
 
-    return targetKind === "chemistry" ? "to-chemistry" : "to-home";
+    return pageIndex(targetKind) > pageIndex(currentKind) ? "forward" : "backward";
   }
 
   function cleanupEntryClass(className) {
@@ -38,12 +52,12 @@
   }
 
   const pendingTransition = window.sessionStorage.getItem(STORAGE_KEY);
-  if (pendingTransition === "to-chemistry") {
-    document.body.classList.add("is-entering-from-home");
-    cleanupEntryClass("is-entering-from-home");
-  } else if (pendingTransition === "to-home") {
-    document.body.classList.add("is-entering-from-chemistry");
-    cleanupEntryClass("is-entering-from-chemistry");
+  if (pendingTransition === "forward") {
+    document.body.classList.add("is-entering-forward");
+    cleanupEntryClass("is-entering-forward");
+  } else if (pendingTransition === "backward") {
+    document.body.classList.add("is-entering-backward");
+    cleanupEntryClass("is-entering-backward");
   }
   window.sessionStorage.removeItem(STORAGE_KEY);
 
@@ -75,17 +89,16 @@
       return;
     }
 
-    const transitionType = getTransitionType(targetUrl);
-    if (!transitionType || reduceMotion.matches) {
+    const transitionDirection = getTransitionDirection(targetUrl);
+    if (!transitionDirection || reduceMotion.matches) {
       return;
     }
 
     event.preventDefault();
-    window.sessionStorage.setItem(STORAGE_KEY, transitionType);
+    window.sessionStorage.setItem(STORAGE_KEY, transitionDirection);
 
     const leavingClass =
-      transitionType === "to-chemistry" ? "is-leaving-to-chemistry" : "is-leaving-to-home";
-
+      transitionDirection === "forward" ? "is-leaving-forward" : "is-leaving-backward";
     document.body.classList.add(leavingClass);
 
     window.setTimeout(() => {
