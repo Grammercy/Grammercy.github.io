@@ -26,7 +26,7 @@ const curatedNotes = {
   fourierify:
     "A JavaScript signal-processing project focused on Fourier concepts and interactive experimentation. This is the newest active addition to the public project set.",
   starrynight:
-    "An interactive night-sky planner built on the React + TypeScript + Vite scaffold. It turns the project into a usable observing tool instead of a static showcase.",
+    "An interactive night-sky app built on the React + TypeScript + Vite scaffold. It launches the same live sky viewer that is hosted in the GitHub project.",
   "Grammercy.github.io":
     "The repository for this GitHub Pages site itself. It acts as the front door to the public project catalog and is intentionally deployed as a zero-build static website."
 };
