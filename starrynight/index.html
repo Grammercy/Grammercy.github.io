@@ -3,10 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Starrynight | Celestial Launchpad</title>
+    <title>Starrynight | Observation Planner</title>
     <meta
       name="description"
-      content="A celestial landing page for Grammercy's Starrynight project, currently a fresh React + TypeScript + Vite scaffold."
+      content="An interactive night-sky planner for Grammercy with sky conditions, target recommendations, and a live star chart."
     />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -25,157 +25,209 @@
         <a class="site-tab is-active" href="./" aria-current="page">Starrynight</a>
       </nav>
 
-      <main class="scene">
-        <header class="hero">
-          <div class="hero-copy">
-            <p class="eyebrow">Starrynight</p>
-            <h1>A launchpad for the night side of the codebase.</h1>
-            <p class="lede">
-              This page gives Grammercy's newest TypeScript repository a dedicated home.
-              The GitHub project is currently a fresh React + TypeScript + Vite scaffold,
-              so the layout frames it as an origin point rather than a finished release.
-            </p>
-            <div class="hero-actions">
-              <a
-                class="button button-primary"
-                href="https://github.com/Grammercy/starrynight"
-                target="_blank"
-                rel="noreferrer"
-              >
-                Open GitHub repo
-              </a>
-              <a class="button button-secondary" href="../#projects">Back to registry</a>
+      <header class="app-hero">
+        <div class="hero-copy">
+          <p class="eyebrow">Observation Planner</p>
+          <h1>Choose a sky, tune the view, and pick what to observe.</h1>
+          <p class="lede">
+            Starrynight is a live night-sky planner. Adjust time, location, and viewing
+            conditions, then use the chart and recommendation list to decide what is worth
+            targeting tonight.
+          </p>
+          <div class="hero-actions">
+            <button class="button button-primary" id="now-btn" type="button">Use current time</button>
+            <button class="button button-secondary" id="random-btn" type="button">Random night</button>
+            <button class="button button-secondary" id="reset-btn" type="button">Reset planner</button>
+          </div>
+        </div>
+
+        <div class="hero-metrics" aria-label="Session summary">
+          <article class="mini-card">
+            <span class="mini-label">Moon</span>
+            <strong id="moon-phase-value">--</strong>
+            <p id="moon-phase-note">Loading conditions.</p>
+          </article>
+          <article class="mini-card">
+            <span class="mini-label">Sky quality</span>
+            <strong id="sky-quality-value">--</strong>
+            <p id="sky-quality-note">Waiting for the planner.</p>
+          </article>
+          <article class="mini-card">
+            <span class="mini-label">Visible targets</span>
+            <strong id="visible-count-value">--</strong>
+            <p id="visible-count-note">Based on the current chart.</p>
+          </article>
+          <article class="mini-card">
+            <span class="mini-label">Best target</span>
+            <strong id="best-target-value">--</strong>
+            <p id="best-window-value">--</p>
+          </article>
+        </div>
+      </header>
+
+      <main class="planner">
+        <aside class="panel controls-panel" aria-label="Planner controls">
+          <div class="panel-heading">
+            <h2>Session controls</h2>
+            <p>Tune the observing conditions and watch the chart respond.</p>
+          </div>
+
+          <label class="control">
+            <span class="control-top">
+              <span>Date and time</span>
+              <strong id="datetime-readout"></strong>
+            </span>
+            <input id="datetime-input" type="datetime-local" />
+          </label>
+
+          <label class="control">
+            <span class="control-top">
+              <span>Latitude</span>
+              <strong id="latitude-readout"></strong>
+            </span>
+            <input id="latitude-input" type="range" min="-60" max="70" step="0.1" />
+          </label>
+
+          <label class="control">
+            <span class="control-top">
+              <span>Longitude</span>
+              <strong id="longitude-readout"></strong>
+            </span>
+            <input id="longitude-input" type="range" min="-180" max="180" step="0.1" />
+          </label>
+
+          <label class="control">
+            <span class="control-top">
+              <span>Bortle class</span>
+              <strong id="bortle-readout"></strong>
+            </span>
+            <input id="bortle-input" type="range" min="1" max="9" step="1" />
+          </label>
+
+          <label class="control">
+            <span class="control-top">
+              <span>Cloud cover</span>
+              <strong id="cloud-readout"></strong>
+            </span>
+            <input id="cloud-input" type="range" min="0" max="100" step="1" />
+          </label>
+
+          <label class="control">
+            <span class="control-top">
+              <span>Chart zoom</span>
+              <strong id="zoom-readout"></strong>
+            </span>
+            <input id="zoom-input" type="range" min="0.75" max="1.8" step="0.01" />
+          </label>
+
+          <label class="control">
+            <span class="control-top">
+              <span>Observer focus</span>
+              <strong>Target filter</strong>
+            </span>
+            <select id="focus-input">
+              <option value="auto">Auto</option>
+              <option value="wide-field">Wide-field</option>
+              <option value="bright">Bright targets</option>
+              <option value="deep-sky">Deep sky</option>
+              <option value="planetary">Planetary</option>
+            </select>
+          </label>
+
+          <div class="toggle-row">
+            <label class="toggle">
+              <input id="labels-toggle" type="checkbox" />
+              <span>Show labels</span>
+            </label>
+            <label class="toggle">
+              <input id="lines-toggle" type="checkbox" />
+              <span>Show constellation lines</span>
+            </label>
+          </div>
+
+          <div class="preset-block">
+            <span class="preset-label">Quick presets</span>
+            <div class="preset-grid">
+              <button class="preset-button" type="button" data-preset="urban">City glow</button>
+              <button class="preset-button" type="button" data-preset="suburban">Suburban sky</button>
+              <button class="preset-button" type="button" data-preset="dark">Dark site</button>
+              <button class="preset-button" type="button" data-preset="moonlit">Moonlit night</button>
+            </div>
+          </div>
+        </aside>
+
+        <section class="panel sky-panel" aria-label="Star chart">
+          <div class="sky-topbar">
+            <div>
+              <p class="sky-kicker">Live chart</p>
+              <h2>Southern and northern sky preview</h2>
+            </div>
+            <div class="sky-status">
+              <span id="sky-caption">Ready.</span>
             </div>
           </div>
 
-          <div class="sky-panel" aria-hidden="true">
-            <div class="sky-glow sky-glow-a"></div>
-            <div class="sky-glow sky-glow-b"></div>
-
-            <svg class="constellation-map" viewBox="0 0 640 560" role="presentation" aria-hidden="true">
-              <defs>
-                <linearGradient id="star-line" x1="0%" y1="0%" x2="100%" y2="100%">
-                  <stop offset="0%" stop-color="#8bf0ff" />
-                  <stop offset="55%" stop-color="#d7c9ff" />
-                  <stop offset="100%" stop-color="#ffe19d" />
-                </linearGradient>
-                <radialGradient id="star-core" cx="40%" cy="35%" r="70%">
-                  <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
-                  <stop offset="38%" stop-color="#8bf0ff" stop-opacity="0.92" />
-                  <stop offset="100%" stop-color="#8bf0ff" stop-opacity="0" />
-                </radialGradient>
-              </defs>
-
-              <g fill="none" stroke-linecap="round" stroke-linejoin="round">
-                <path class="constellation-line" d="M84 370 L170 272 L286 206 L410 158 L532 108" />
-                <path class="constellation-line" d="M170 272 L132 180 L78 102" />
-                <path class="constellation-line" d="M286 206 L266 324 L332 434" />
-                <path class="constellation-line" d="M410 158 L454 264 L542 344" />
-                <path class="constellation-line" d="M266 324 L148 400 L88 494" />
-                <path class="constellation-line" d="M454 264 L402 392 L512 482" />
-              </g>
-
-              <g class="star-cluster">
-                <circle class="star star-large" cx="84" cy="370" r="12" />
-                <circle class="star" cx="170" cy="272" r="7" />
-                <circle class="star" cx="286" cy="206" r="8" />
-                <circle class="star" cx="410" cy="158" r="9" />
-                <circle class="star star-large" cx="532" cy="108" r="13" />
-                <circle class="star" cx="132" cy="180" r="6" />
-                <circle class="star" cx="78" cy="102" r="6" />
-                <circle class="star" cx="266" cy="324" r="7" />
-                <circle class="star" cx="332" cy="434" r="7" />
-                <circle class="star" cx="454" cy="264" r="7" />
-                <circle class="star" cx="542" cy="344" r="7" />
-                <circle class="star" cx="148" cy="400" r="6" />
-                <circle class="star" cx="88" cy="494" r="5" />
-                <circle class="star" cx="402" cy="392" r="6" />
-                <circle class="star" cx="512" cy="482" r="7" />
-              </g>
-
-              <text class="map-label" x="42" y="58">Launch vector</text>
-              <text class="map-label" x="458" y="528">Constellation grid</text>
-            </svg>
-
-            <div class="core-badge">
-              <span>SN</span>
-              <strong>Startup orbit</strong>
+          <div class="sky-stage">
+            <canvas id="sky-canvas" aria-label="Night sky chart" role="img"></canvas>
+            <div class="sky-overlay">
+              <span class="overlay-pill">Click a star or target to pin it</span>
+              <span class="overlay-pill">Settings save locally</span>
             </div>
-
-            <div class="floating-chip chip-one">React + TypeScript + Vite</div>
-            <div class="floating-chip chip-two">Launch scaffold</div>
-            <div class="floating-chip chip-three">Ready for the first mission</div>
           </div>
-        </header>
 
-        <section class="status-grid" aria-label="Project snapshot">
-          <article class="status-card">
-            <span class="status-label">Repository state</span>
-            <strong>Fresh scaffold</strong>
-            <p>
-              The upstream repository is the stock Vite + React + TypeScript starter, so
-              this page keeps the framing honest and lets the project grow into itself.
-            </p>
-          </article>
-          <article class="status-card">
-            <span class="status-label">Primary stack</span>
-            <strong>TypeScript</strong>
-            <p>
-              The GitHub metadata already identifies the project as a TypeScript codebase,
-              which makes it a natural fit for the site registry.
-            </p>
-          </article>
-          <article class="status-card">
-            <span class="status-label">Visual motif</span>
-            <strong>Night sky</strong>
-            <p>
-              The page leans into orbital lines, glowing points, and star-map spacing so
-              the project feels distinct from the chemistry and signal-processing tabs.
-            </p>
-          </article>
+          <div class="sky-legend" aria-label="Legend">
+            <span><i class="dot dot-bright"></i> Bright stars</span>
+            <span><i class="dot dot-deep"></i> Deep-sky targets</span>
+            <span><i class="dot dot-line"></i> Constellation lines</span>
+            <span><i class="dot dot-focus"></i> Selected target</span>
+          </div>
         </section>
 
-        <section class="narrative-grid" aria-label="Launch notes">
-          <article class="story-card story-card-wide">
-            <p class="story-index">01</p>
-            <h2>What Starrynight is right now</h2>
-            <p>
-              A clean starting point. It has the bones of a modern front-end app, but no
-              invented product story layered over the top. That makes it a useful entry in
-              the public catalog because the state of the repo is easy to read at a glance.
-            </p>
-          </article>
+        <aside class="panel insight-panel" aria-label="Target recommendations">
+          <div class="detail-card">
+            <span class="mini-label">Selected target</span>
+            <h2 id="selected-target-name">--</h2>
+            <p id="selected-target-note">Pick a target from the chart or recommendation list.</p>
 
-          <article class="story-card">
-            <p class="story-index">02</p>
-            <h2>Why it belongs here</h2>
-            <p>
-              The website already treats Chemistry and Fourierify as first-class projects.
-              Starrynight now gets the same treatment with its own tab, registry entry, and
-              dedicated landing page.
-            </p>
-          </article>
+            <dl class="detail-grid">
+              <div>
+                <dt>Type</dt>
+                <dd id="selected-target-kind">--</dd>
+              </div>
+              <div>
+                <dt>Magnitude</dt>
+                <dd id="selected-target-mag">--</dd>
+              </div>
+              <div>
+                <dt>Altitude</dt>
+                <dd id="selected-target-alt">--</dd>
+              </div>
+              <div>
+                <dt>Suitability</dt>
+                <dd id="selected-target-score">--</dd>
+              </div>
+            </dl>
+          </div>
 
-          <article class="story-card accent-card">
-            <p class="story-index">03</p>
-            <h2>Open the source</h2>
-            <p>
-              Jump straight to the GitHub repository if you want to inspect the scaffold or
-              continue building the project from the star map outward.
-            </p>
-            <a
-              class="button button-primary"
-              href="https://github.com/Grammercy/starrynight"
-              target="_blank"
-              rel="noreferrer"
-            >
-              View repository
-            </a>
-          </article>
-        </section>
+          <div class="detail-card">
+            <span class="mini-label">Best matches</span>
+            <h3>Recommended for this sky</h3>
+            <div id="recommendation-list" class="recommendation-list" role="list"></div>
+          </div>
+
+          <div class="detail-card brief-card">
+            <span class="mini-label">Brief</span>
+            <ul class="brief-list">
+              <li><strong id="sky-class-value">--</strong><span>Sky class</span></li>
+              <li><strong id="limiting-mag-value">--</strong><span>Limiting magnitude</span></li>
+              <li><strong id="twilight-value">--</strong><span>Best window</span></li>
+            </ul>
+          </div>
+        </aside>
       </main>
     </div>
 
     <script src="../page-transition.js"></script>
+    <script src="./app.js"></script>
   </body>
 </html>
