@@ -25,6 +25,8 @@ const curatedNotes = {
     "A chemistry visualizer that currently runs as a lightweight local web server in Go. It is especially fitting for this site because it mirrors the chemistry motif in both subject matter and presentation.",
   fourierify:
     "A JavaScript signal-processing project focused on Fourier concepts and interactive experimentation. This is the newest active addition to the public project set.",
+  starrynight:
+    "A fresh React + TypeScript + Vite scaffold for a future celestial interface. It reads as a launch pad rather than a finished app, which makes it a fitting new surface for the site.",
   "Grammercy.github.io":
     "The repository for this GitHub Pages site itself. It acts as the front door to the public project catalog and is intentionally deployed as a zero-build static website."
 };
@@ -76,6 +78,7 @@ const buildTags = (repo) => {
 
   if (repo.name === "chemistry") tags.push("chemistry motif");
   if (repo.name === "fourierify") tags.push("signal processing");
+  if (repo.name === "starrynight") tags.push("launch scaffold");
   if (repo.name === "ClankerIsComing") tags.push("AI engine");
   if (repo.name === "cordverse") tags.push("self-hosted");
   if (repo.name === "Grammercy.github.io") tags.push("GitHub Pages");
@@ -148,16 +151,11 @@ const hydrate = async () => {
 
     renderRepos(sourceRepos);
   } catch (error) {
-    repoCount.textContent = "14";
-    createdAt.textContent = "Dec 23, 2023";
-    languageCount.textContent = "8";
-    registryNote.textContent =
-      "GitHub API sync failed, so the page is showing the last known project framing from this build.";
-
     const fallbackRepos = [
       "Grammercy.github.io",
       "chemistry",
       "fourierify",
+      "starrynight",
       "ClankerIsComing",
       "cordverse",
       "discordo",
@@ -178,6 +176,12 @@ const hydrate = async () => {
       language: null,
       fork: name === "discordo" || name === "The-Powder-Toy-Go"
     }));
+
+    repoCount.textContent = `${fallbackRepos.length}`;
+    createdAt.textContent = "Dec 23, 2023";
+    languageCount.textContent = "8";
+    registryNote.textContent =
+      "GitHub API sync failed, so the page is showing the last known project framing from this build.";
 
     renderRepos(fallbackRepos);
     console.error(error);

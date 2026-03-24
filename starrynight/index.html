@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Starrynight | Celestial Launchpad</title>
+    <meta
+      name="description"
+      content="A celestial landing page for Grammercy's Starrynight project, currently a fresh React + TypeScript + Vite scaffold."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Manrope:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app-shell" data-transition-shell>
+      <nav class="site-tabs" aria-label="Site sections">
+        <a class="site-tab" href="../">Project Registry</a>
+        <a class="site-tab" href="../chemistry/">Weak Acid Simulator</a>
+        <a class="site-tab" href="../fourierify/">Fourierify</a>
+        <a class="site-tab is-active" href="./" aria-current="page">Starrynight</a>
+      </nav>
+
+      <main class="scene">
+        <header class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">Starrynight</p>
+            <h1>A launchpad for the night side of the codebase.</h1>
+            <p class="lede">
+              This page gives Grammercy's newest TypeScript repository a dedicated home.
+              The GitHub project is currently a fresh React + TypeScript + Vite scaffold,
+              so the layout frames it as an origin point rather than a finished release.
+            </p>
+            <div class="hero-actions">
+              <a
+                class="button button-primary"
+                href="https://github.com/Grammercy/starrynight"
+                target="_blank"
+                rel="noreferrer"
+              >
+                Open GitHub repo
+              </a>
+              <a class="button button-secondary" href="../#projects">Back to registry</a>
+            </div>
+          </div>
+
+          <div class="sky-panel" aria-hidden="true">
+            <div class="sky-glow sky-glow-a"></div>
+            <div class="sky-glow sky-glow-b"></div>
+
+            <svg class="constellation-map" viewBox="0 0 640 560" role="presentation" aria-hidden="true">
+              <defs>
+                <linearGradient id="star-line" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stop-color="#8bf0ff" />
+                  <stop offset="55%" stop-color="#d7c9ff" />
+                  <stop offset="100%" stop-color="#ffe19d" />
+                </linearGradient>
+                <radialGradient id="star-core" cx="40%" cy="35%" r="70%">
+                  <stop offset="0%" stop-color="#ffffff" stop-opacity="1" />
+                  <stop offset="38%" stop-color="#8bf0ff" stop-opacity="0.92" />
+                  <stop offset="100%" stop-color="#8bf0ff" stop-opacity="0" />
+                </radialGradient>
+              </defs>
+
+              <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+                <path class="constellation-line" d="M84 370 L170 272 L286 206 L410 158 L532 108" />
+                <path class="constellation-line" d="M170 272 L132 180 L78 102" />
+                <path class="constellation-line" d="M286 206 L266 324 L332 434" />
+                <path class="constellation-line" d="M410 158 L454 264 L542 344" />
+                <path class="constellation-line" d="M266 324 L148 400 L88 494" />
+                <path class="constellation-line" d="M454 264 L402 392 L512 482" />
+              </g>
+
+              <g class="star-cluster">
+                <circle class="star star-large" cx="84" cy="370" r="12" />
+                <circle class="star" cx="170" cy="272" r="7" />
+                <circle class="star" cx="286" cy="206" r="8" />
+                <circle class="star" cx="410" cy="158" r="9" />
+                <circle class="star star-large" cx="532" cy="108" r="13" />
+                <circle class="star" cx="132" cy="180" r="6" />
+                <circle class="star" cx="78" cy="102" r="6" />
+                <circle class="star" cx="266" cy="324" r="7" />
+                <circle class="star" cx="332" cy="434" r="7" />
+                <circle class="star" cx="454" cy="264" r="7" />
+                <circle class="star" cx="542" cy="344" r="7" />
+                <circle class="star" cx="148" cy="400" r="6" />
+                <circle class="star" cx="88" cy="494" r="5" />
+                <circle class="star" cx="402" cy="392" r="6" />
+                <circle class="star" cx="512" cy="482" r="7" />
+              </g>
+
+              <text class="map-label" x="42" y="58">Launch vector</text>
+              <text class="map-label" x="458" y="528">Constellation grid</text>
+            </svg>
+
+            <div class="core-badge">
+              <span>SN</span>
+              <strong>Startup orbit</strong>
+            </div>
+
+            <div class="floating-chip chip-one">React + TypeScript + Vite</div>
+            <div class="floating-chip chip-two">Launch scaffold</div>
+            <div class="floating-chip chip-three">Ready for the first mission</div>
+          </div>
+        </header>
+
+        <section class="status-grid" aria-label="Project snapshot">
+          <article class="status-card">
+            <span class="status-label">Repository state</span>
+            <strong>Fresh scaffold</strong>
+            <p>
+              The upstream repository is the stock Vite + React + TypeScript starter, so
+              this page keeps the framing honest and lets the project grow into itself.
+            </p>
+          </article>
+          <article class="status-card">
+            <span class="status-label">Primary stack</span>
+            <strong>TypeScript</strong>
+            <p>
+              The GitHub metadata already identifies the project as a TypeScript codebase,
+              which makes it a natural fit for the site registry.
+            </p>
+          </article>
+          <article class="status-card">
+            <span class="status-label">Visual motif</span>
+            <strong>Night sky</strong>
+            <p>
+              The page leans into orbital lines, glowing points, and star-map spacing so
+              the project feels distinct from the chemistry and signal-processing tabs.
+            </p>
+          </article>
+        </section>
+
+        <section class="narrative-grid" aria-label="Launch notes">
+          <article class="story-card story-card-wide">
+            <p class="story-index">01</p>
+            <h2>What Starrynight is right now</h2>
+            <p>
+              A clean starting point. It has the bones of a modern front-end app, but no
+              invented product story layered over the top. That makes it a useful entry in
+              the public catalog because the state of the repo is easy to read at a glance.
+            </p>
+          </article>
+
+          <article class="story-card">
+            <p class="story-index">02</p>
+            <h2>Why it belongs here</h2>
+            <p>
+              The website already treats Chemistry and Fourierify as first-class projects.
+              Starrynight now gets the same treatment with its own tab, registry entry, and
+              dedicated landing page.
+            </p>
+          </article>
+
+          <article class="story-card accent-card">
+            <p class="story-index">03</p>
+            <h2>Open the source</h2>
+            <p>
+              Jump straight to the GitHub repository if you want to inspect the scaffold or
+              continue building the project from the star map outward.
+            </p>
+            <a
+              class="button button-primary"
+              href="https://github.com/Grammercy/starrynight"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View repository
+            </a>
+          </article>
+        </section>
+      </main>
+    </div>
+
+    <script src="../page-transition.js"></script>
+  </body>
+</html>
