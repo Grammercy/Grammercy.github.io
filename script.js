@@ -26,7 +26,7 @@ const curatedNotes = {
   fourierify:
     "A JavaScript signal-processing project focused on Fourier concepts and interactive experimentation. This is the newest active addition to the public project set.",
   starrynight:
-    "A fresh React + TypeScript + Vite scaffold for a future celestial interface. It reads as a launch pad rather than a finished app, which makes it a fitting new surface for the site.",
+    "An interactive night-sky planner built on the React + TypeScript + Vite scaffold. It turns the project into a usable observing tool instead of a static showcase.",
   "Grammercy.github.io":
     "The repository for this GitHub Pages site itself. It acts as the front door to the public project catalog and is intentionally deployed as a zero-build static website."
 };
@@ -78,7 +78,7 @@ const buildTags = (repo) => {
 
   if (repo.name === "chemistry") tags.push("chemistry motif");
   if (repo.name === "fourierify") tags.push("signal processing");
-  if (repo.name === "starrynight") tags.push("launch scaffold");
+  if (repo.name === "starrynight") tags.push("night-sky");
   if (repo.name === "ClankerIsComing") tags.push("AI engine");
   if (repo.name === "cordverse") tags.push("self-hosted");
   if (repo.name === "Grammercy.github.io") tags.push("GitHub Pages");
